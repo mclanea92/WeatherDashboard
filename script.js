@@ -46,4 +46,20 @@ var getCityWeather = function(weather, searchCity) {
     var humidityEL = document.createElement('span');
     humidityEL.textContent = "Humidity Percentage " + weather.main.humidity;
     humidityEL.classList.add('list-group-item');
+
+    var windSpeedEl = document.createElement('span');
+    windSpeedEl.textContent = "Wind Speed" + weather.wind.speed;
+    windSpeedEl.classList.add('list-group-item');
+
+}
+
+var display5Day = function(weather){
+    forecastContainerEl.textContent = "";
+    forecastTitle.textContent = "5 Day Forcast";
+
+    var forecast = weather.list;
+        for(var i=5; i < forecast.length; i++)  // might need to change
+        var dailyForcast = forecast[i];
+
+        
 }
