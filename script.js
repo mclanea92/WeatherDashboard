@@ -1,4 +1,4 @@
-
+var cities = [];
 var city = document.querySelector('#city')
 var cityFormEl = document.querySelector('#city-search-form');
 var cityInputEl = document.querySelector('#city');
@@ -7,11 +7,11 @@ var citySearchInputEl = document.querySelector("#searched-city");
 var forecastTitle = document.querySelector("#forecast");
 var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
-var cities = [];
+
 
 var formSubmitHandler = function(event){
     event.preventDefault();
-    var city = cityInputEl.ariaValueMax.trim()
+    var city = cityInputEl.value.trim();
     if(city) {
         getCityWeather(city);
         get5Day(city);
@@ -73,9 +73,22 @@ var displayWeather = function(weather, searchCity) {
     weatherContainerEL.appendChild(humidityEL);
     weatherContainerEL.appendChild(windSpeedEl);
 
-    
 
 }
+
+var get5Day = function(city){
+    var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+
+    fetch(apiURL)
+    .then(function(response){
+        response.json().then(function(data){
+            display5Day(data);
+        });
+    });
+
+};
+
 var display5Day = function(weather){
     forecastContainerEl.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
@@ -89,7 +102,8 @@ var display5Day = function(weather){
         
         //creates date
         var forecastEL = document.createElement('h5');
-        forecastDate.textContent = moment.unix(dispalForecast.dt).format("MMM D, YYYY");
+        forecastDate.textContent = moment.unix(displayForecast.dt).format("MMM D, YYYY");
+        forecastDate.classList.add('card-body text-center')
         forecastEL.appendChild(forecastDate);
 
         //creates images in 5 day forecast
@@ -111,24 +125,36 @@ var display5Day = function(weather){
         forecastHumEl.textContent = dailyForecast.main.humidity;
 
         forecastEL.appendChild(forecastHumEl); 
+
+        forecastContainerEl.appendChild(forecastEL);
     }
 
 }
 
+var pastSearch = function(pastSearch){
+    pastSearchEL = document.createElement('button');
+    pastSearchEL.textContent = pastSearch;
+    pastSearchEL.classList = 'd-flex w-100 btn-light border p-2';
+    pastSearchEL.setAttribute('data-city', pastSearch);
+    pastSearchEL.setAttribute('type', 'submit');
 
-
-
-
-
-
-
-var get5Day = function(city){
-    var APIkey = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=b593b8f7d2b3fb75befb732897df7d93";
-
-    fetch(APIkey).then(function(response){
-        response.json().ten(function(data){
-            display5Day(data);
-        })
-    })
-
+    pastSearchButtonEl.prepend(pastSearchEL);
 }
+
+var pastSearchHandler = function(event){
+    var city = event.target.getAttribute('data-city');
+    if(city){
+        getCityWeather(city);
+        get5Day(city);
+
+    }
+}
+
+cityFormEl.addEventListener('submit', formSubmitHandler);
+pastSearchButtonEl.addEventListener('click', pastSearchHandler)
+
+
+
+
+
+
