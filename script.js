@@ -7,7 +7,8 @@ var citySearchInputEl = document.querySelector("#searched-city");
 var forecastTitle = document.querySelector("#forecast");
 var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
-
+var lat = 0.0;
+var long = 0.0;
 
 var formSubmitHandler = function(event){
     event.preventDefault();
@@ -38,6 +39,9 @@ var getCityWeather = function(city){
     (function(response){
         response.json().then(function(data){
             displayWeather(data, city);
+console.log('response', data)
+            lat = data.coord.lat;
+            long = data.coord.lon;
         })
     })
 }
@@ -47,11 +51,6 @@ var getCityWeather = function(city){
 var displayWeather = function(weather, searchCity) {
     weatherContainerEL.textContent="";
     citySearchInputEl.textContent=searchCity;
-
-
-    // var currentDate = document.createElement('span');
-    // currentDate.textContent=" (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
-    // citySearchInputEl.appendChild(currentDate);
 
     var weatherIcon = document.createElement('img');
     weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
@@ -74,11 +73,12 @@ var displayWeather = function(weather, searchCity) {
     weatherContainerEL.appendChild(windSpeedEl);
 
 
+
 }
 
 var get5Day = function(city){
     var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
-    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
 
     fetch(apiURL)
     .then(function(response){
@@ -94,15 +94,16 @@ var display5Day = function(weather){
     forecastTitle.textContent = "5 Day Forecast";
 
     var forecast = weather.list;
-        for(var i=0; i < forecast.length; i++){  // might need to change
+    console.log(weather)
+        for(var i=0; i < forecast.length; i++){  
         var dailyForecast = forecast[i];
 
         var forecastEL = document.createElement('div');
         forecastEL.classList = 'card bg-primary text-light m-2';
         
         //creates date
-        var forecastEL = document.createElement('h5');
-        forecastDate.textContent = moment.unix(displayForecast.dt).format("MMM D, YYYY");
+        var forecastDate = document.createElement('h5');
+        forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
         forecastDate.classList = 'card-body text-center';
         forecastEL.appendChild(forecastDate);
 
@@ -122,7 +123,7 @@ var display5Day = function(weather){
 
         var forecastHumEl = document.createElement('span');
         forecastHumEl.classList = 'card-body text-center';
-        forecastHumEl.textContent = dailyForecast.main.humidity;
+        forecastHumEl.textContent = dailyForecast.main.humidity + '% Humidity';
 
         forecastEL.appendChild(forecastHumEl); 
 
