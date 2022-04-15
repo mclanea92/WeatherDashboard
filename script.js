@@ -9,6 +9,7 @@ var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 var lat = 0.0;
 var long = 0.0;
+var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
 
 var formSubmitHandler = function(event){
     event.preventDefault();
@@ -32,7 +33,6 @@ var saveSearch = function(){
 
 
 var getCityWeather = function(city){
-    var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
     fetch(apiURL).then
@@ -77,7 +77,6 @@ var displayWeather = function(weather, searchCity) {
 }
 
 var get5Day = function(city){
-    var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
 
     fetch(apiURL)
