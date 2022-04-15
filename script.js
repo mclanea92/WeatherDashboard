@@ -5,8 +5,8 @@ var cityInputEl = document.querySelector('#city');
 var weatherContainer = document.querySelector('#current-weather-container');
 var citySearch = document.querySelector("#searched-city");
 var forecastTitle = document.querySelector("#forecast");
-var forecastContainerEl = document.querySelector("#fiveday-container");
-var pastSearchButtonEl = document.querySelector("#past-search-buttons");
+var forecastContainer = document.querySelector("#fiveday-container");
+var pastSearchButton = document.querySelector("#past-search-buttons");
 var lat = 0.0;
 var long = 0.0;
 var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
@@ -90,7 +90,7 @@ var get5Day = function(city){
 };
 // this is where we display the 5 day forecast
 var display5Day = function(weather){
-    forecastContainerEl.textContent = "";
+    forecastContainer.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
 
     var forecast = weather.list;
@@ -127,7 +127,7 @@ var display5Day = function(weather){
 
         forecastEL.appendChild(forecastHumEl); 
 
-        forecastContainerEl.appendChild(forecastEL);
+        forecastContainer.appendChild(forecastEL);
     }
 
 }
@@ -139,7 +139,7 @@ var pastSearch = function(pastSearch){
     pastSearchEL.setAttribute('data-city', pastSearch);
     pastSearchEL.setAttribute('type', 'submit');
 
-    pastSearchButtonEl.prepend(pastSearchEL);
+    pastSearchButton.prepend(pastSearchEL);
 }
 
 var pastSearchHandler = function(event){
@@ -152,7 +152,7 @@ var pastSearchHandler = function(event){
 }
 
 cityFormEl.addEventListener('submit', submitForm);
-pastSearchButtonEl.addEventListener('click', pastSearchHandler)
+pastSearchButton.addEventListener('click', pastSearchHandler)
 
 
 
