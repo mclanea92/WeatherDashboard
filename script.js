@@ -2,8 +2,8 @@ var cities = [];
 var city = document.querySelector('#city')
 var cityFormEl = document.querySelector('#city-search-form');
 var cityInputEl = document.querySelector('#city');
-var weatherContainerEL = document.querySelector('#current-weather-container');
-var citySearchInputEl = document.querySelector("#searched-city");
+var weatherContainer = document.querySelector('#current-weather-container');
+var citySearch = document.querySelector("#searched-city");
 var forecastTitle = document.querySelector("#forecast");
 var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
@@ -11,7 +11,7 @@ var lat = 0.0;
 var long = 0.0;
 var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
 
-var formSubmitHandler = function(event){
+var submitForm = function(event){
     event.preventDefault();
     var city = cityInputEl.value.trim();
     if(city) {
@@ -26,12 +26,13 @@ var formSubmitHandler = function(event){
     pastSearch(city);
 }
 
+// this is so it says in the browser and saves to localstorage
 var saveSearch = function(){
     localStorage.setItem(cities, JSON.stringify(cities));
 };
 
 
-
+// this is where we get our current weather
 var getCityWeather = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
@@ -47,14 +48,14 @@ console.log('response', data)
 }
 
 
-
+// this is where we display our current weather.
 var displayWeather = function(weather, searchCity) {
-    weatherContainerEL.textContent="";
-    citySearchInputEl.textContent=searchCity;
+    weatherContainer.textContent="";
+    citySearch.textContent=searchCity;
 
     var weatherIcon = document.createElement('img');
     weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
-    citySearchInputEl.appendChild(weatherIcon);
+    citySearch.appendChild(weatherIcon);
 
     var tempatureEL = document.createElement('span');
     tempatureEL.textContent = 'Temp: ' + weather.main.temp + " Fahrenheit";
@@ -68,14 +69,14 @@ var displayWeather = function(weather, searchCity) {
     windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed;
     windSpeedEl.classList.add('list-group-item');
 
-    weatherContainerEL.appendChild(tempatureEL);
-    weatherContainerEL.appendChild(humidityEL);
-    weatherContainerEL.appendChild(windSpeedEl);
+    weatherContainer.appendChild(tempatureEL);
+    weatherContainer.appendChild(humidityEL);
+    weatherContainer.appendChild(windSpeedEl);
 
 
 
 }
-
+// this is where we pull the 5 day forecast
 var get5Day = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
 
@@ -87,7 +88,7 @@ var get5Day = function(city){
     });
 
 };
-
+// this is where we display the 5 day forecast
 var display5Day = function(weather){
     forecastContainerEl.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
@@ -102,7 +103,7 @@ var display5Day = function(weather){
         
         //creates date
         var forecastDate = document.createElement('h5');
-        forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
+        forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");  //how to get the date to work
         forecastDate.classList = 'card-body text-center';
         forecastEL.appendChild(forecastDate);
 
@@ -116,7 +117,7 @@ var display5Day = function(weather){
 
         var forecastTempEl = document.createElement('span');
         forecastTempEl.classList = 'card-body text-center';
-        forecastTempEl.textContent = dailyForecast.main.temp + ' F';
+        forecastTempEl.textContent = dailyForecast.main.temp + ' F';  // how to get to math floor
 
         forecastEL.appendChild(forecastTempEl);
 
@@ -150,7 +151,7 @@ var pastSearchHandler = function(event){
     }
 }
 
-cityFormEl.addEventListener('submit', formSubmitHandler);
+cityFormEl.addEventListener('submit', submitForm);
 pastSearchButtonEl.addEventListener('click', pastSearchHandler)
 
 

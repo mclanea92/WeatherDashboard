@@ -1,5 +1,14 @@
 body {
-    background-color: whitesmoke;
+    background-color: rgba(12, 11, 11, 0.242)
+}
+
+header {
+    text-align: center;
+    background-color: lightblue;
+}
+
+.currentW {
+    border: black solid 3px;
 }
 
 .search-column{
