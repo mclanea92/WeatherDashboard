@@ -11,6 +11,8 @@ var lat = 0.0;
 var long = 0.0;
 var apiKey = "b593b8f7d2b3fb75befb732897df7d93"
 
+
+// this is when the user enters the city and it makes sure its trimmed and finds the correct city
 var submitForm = function(event){
     event.preventDefault();
     var city = cityInputEl.value.trim();
@@ -131,7 +133,7 @@ var display5Day = function(weather){
     }
 
 }
-
+// this is where the past searches are stored
 var pastSearch = function(pastSearch){
     pastSearchEL = document.createElement('button');
     pastSearchEL.textContent = pastSearch;
