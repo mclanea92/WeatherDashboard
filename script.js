@@ -19,7 +19,7 @@ var submitForm = function(event){
     if(city) {
         getCityWeather(city);
         get5Day(city);
-        cities.unshift({city})
+        cities.unshift(city)
     }
     else {
         alert('Enter City Name');
@@ -30,8 +30,24 @@ var submitForm = function(event){
 
 // this is so it says in the browser and saves to localstorage
 var saveSearch = function(){
-    localStorage.setItem(cities, JSON.stringify(cities));
+    localStorage.setItem('cities', JSON.stringify(cities));
 };
+
+function displayHistory() {
+  var localCitys =  localStorage.getItem('cities');
+  var localArray;
+  if (localCitys == null){
+      localArray = [];
+  }
+  else {
+    localArray = JSON.parse(localCitys);
+  }
+  for (var i=0; i < localArray.length; i++) {
+        pastSearch(localArray[i])
+  }
+}
+
+displayHistory()
 
 
 // this is where we get our current weather
@@ -55,6 +71,10 @@ var displayWeather = function(weather, searchCity) {
     weatherContainer.textContent="";
     citySearch.textContent=searchCity;
 
+    var dateDay = document.createElement('p');
+    dateDay.textContent = moment('MMMM Do YYYY')
+    weatherContainer.appendChild(dateDay)
+
     var weatherIcon = document.createElement('img');
     weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
     citySearch.appendChild(weatherIcon);
@@ -71,11 +91,11 @@ var displayWeather = function(weather, searchCity) {
     windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed;
     windSpeedEl.classList.add('list-group-item');
 
-    var UVindexEl = document.createElement('span');
-    UVindexEl = 
+    // var UVindexEl = document.createElement('span');
+    // UVindexEl = 
 
-    lat = data.coord.lat;
-    long = data.coord.lon;
+    // lat = data.coord.lat;
+    // long = data.coord.lon;
 
     weatherContainer.appendChild(tempatureEL);
     weatherContainer.appendChild(humidityEL);
@@ -86,11 +106,13 @@ var displayWeather = function(weather, searchCity) {
 }
 // this is where we pull the 5 day forecast
 var get5Day = function(city){
-    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
+    var apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
+    
 
     fetch(apiURL)
     .then(function(response){
         response.json().then(function(data){
+            console.log(data)
             display5Day(data);
         });
     });
@@ -98,12 +120,13 @@ var get5Day = function(city){
 };
 // this is where we display the 5 day forecast
 var display5Day = function(weather){
+    console.log(weather)
     forecastContainer.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
 
-    var forecast = weather.list;
+    var forecast = weather.daily;
     console.log(weather)
-        for(var i=0; i < forecast.length; i++){  
+        for(var i= 0; i < 5; i++){  
         var dailyForecast = forecast[i];
 
         var forecastEL = document.createElement('div');
@@ -125,13 +148,13 @@ var display5Day = function(weather){
 
         var forecastTempEl = document.createElement('span');
         forecastTempEl.classList = 'card-body text-center';
-        forecastTempEl.textContent = dailyForecast.main.temp + ' F';  // how to get to math floor
+        forecastTempEl.textContent = dailyForecast.temp.day + ' F';  // how to get to math floor
 
         forecastEL.appendChild(forecastTempEl);
 
         var forecastHumEl = document.createElement('span');
         forecastHumEl.classList = 'card-body text-center';
-        forecastHumEl.textContent = dailyForecast.main.humidity + '% Humidity';
+        forecastHumEl.textContent = dailyForecast.humidity + '% Humidity';
 
         forecastEL.appendChild(forecastHumEl); 
 
@@ -140,7 +163,7 @@ var display5Day = function(weather){
 
 }
 // this is where the past searches are stored
-var pastSearch = function(pastSearch){
+function pastSearch(pastSearch){
     pastSearchEL = document.createElement('button');
     pastSearchEL.textContent = pastSearch;
     pastSearchEL.classList = 'd-flex w-100 btn-light border p-2';
