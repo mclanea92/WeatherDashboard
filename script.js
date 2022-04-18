@@ -72,7 +72,7 @@ var displayWeather = function(weather, searchCity) {
     citySearch.textContent=searchCity;
 
     var dateDay = document.createElement('p');
-    dateDay.textContent = moment('MMMM Do YYYY')
+    dateDay.textContent = moment('MMMM Do YYYY')  // fix this not showing correct date
     weatherContainer.appendChild(dateDay)
 
     var weatherIcon = document.createElement('img');
