@@ -35,6 +35,7 @@ var saveSearch = function(){
 
 function displayHistory() {
   var localCitys =  localStorage.getItem('cities');
+  cities = JSON.parse(localCitys)
   var localArray;
   if (localCitys == null){
       localArray = [];
@@ -47,7 +48,7 @@ function displayHistory() {
   }
 }
 
-displayHistory()
+
 
 
 // this is where we get our current weather
@@ -61,6 +62,7 @@ var getCityWeather = function(city){
 console.log('response', data)
             lat = data.coord.lat;
             long = data.coord.lon;
+            get5Day(city);
         })
     })
 }
@@ -72,7 +74,7 @@ var displayWeather = function(weather, searchCity) {
     citySearch.textContent=searchCity;
 
     var dateDay = document.createElement('p');
-    dateDay.textContent = moment('MMMM Do YYYY')  // fix this not showing correct date
+    dateDay.textContent = moment().format('MMMM Do YYYY')  // fix this not showing correct date
     weatherContainer.appendChild(dateDay)
 
     var weatherIcon = document.createElement('img');
@@ -124,6 +126,8 @@ var display5Day = function(weather){
     forecastContainer.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
 
+
+    
     var forecast = weather.daily;
     console.log(weather)
         for(var i= 0; i < 5; i++){  
@@ -134,7 +138,7 @@ var display5Day = function(weather){
         
         //creates date
         var forecastDate = document.createElement('h5');
-        forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");  //how to get the date to work
+        forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY"); 
         forecastDate.classList = 'card-body text-center';
         forecastEL.appendChild(forecastDate);
 
@@ -142,6 +146,8 @@ var display5Day = function(weather){
         var weatherIcon = document.createElement('img');
         weatherIcon.classList = 'card-body text-center';
         weatherIcon.setAttribute('src', `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`)
+
+        console.log(dailyForecast.weather[0])
 
         forecastEL.appendChild(weatherIcon);
 
@@ -177,11 +183,10 @@ var pastSearchHandler = function(event){
     var city = event.target.getAttribute('data-city');
     if(city){
         getCityWeather(city);
-        get5Day(city);
-
+        
     }
 }
-
+displayHistory()
 cityFormEl.addEventListener('submit', submitForm);
 pastSearchButton.addEventListener('click', pastSearchHandler)
 
