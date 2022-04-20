@@ -87,11 +87,11 @@ var displayWeather = function(weather, searchCity) {
     tempatureEL.classList.add('list-group-item')
 
     var humidityEL = document.createElement('span');
-    humidityEL.textContent = "Humidity Percentage: " + weather.main.humidity;
+    humidityEL.textContent = "Humidity: " + weather.main.humidity + " %";
     humidityEL.classList.add('list-group-item');
 
     var windSpeedEl = document.createElement('span');
-    windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed;
+    windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed + " mph";
     windSpeedEl.classList.add('list-group-item');
 
     // var UVindexEl = document.createElement('span');
