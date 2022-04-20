@@ -67,6 +67,7 @@ console.log('response', data)
     })
 }
 
+// current.uvi
 
 // this is where we display our current weather.
 var displayWeather = function(weather, searchCity) {
@@ -103,9 +104,21 @@ var displayWeather = function(weather, searchCity) {
     weatherContainer.appendChild(humidityEL);
     weatherContainer.appendChild(windSpeedEl);
 
-
-
 }
+
+var getUV = function(city){
+    var UVapi = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    
+
+    fetch(UVapi)
+    .then(function(response){
+        response.json().then(function(data){
+            console.log(data)
+            displayUV(data);
+        });
+    })};
+
+
 // this is where we pull the 5 day forecast
 var get5Day = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&cnt=5&units=imperial&appid=${apiKey}`
@@ -186,6 +199,8 @@ var pastSearchHandler = function(event){
         
     }
 }
+
+
 displayHistory()
 cityFormEl.addEventListener('submit', submitForm);
 pastSearchButton.addEventListener('click', pastSearchHandler)
