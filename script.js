@@ -69,7 +69,7 @@ var getCityWeather = function(city){
     })
 }
 
-// current.uvi
+
 
 // this is where we display our current weather.
 var displayWeather = function(weather, searchCity) {
