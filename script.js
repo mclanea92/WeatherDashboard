@@ -108,22 +108,6 @@ var displayWeather = function(weather, searchCity) {
 
 }
 
-// var getUV = function(lat, lon){
-//     var UVapi = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
-    
-
-//     fetch(UVapi)
-//     .then(function(response){
-//         response.json().then(function(data){
-          
-//             displayUV(data);
-//         });
-//     })};
-
-// var displayUV = function(weather){
-//     console.log(weather)
-// }
-
 
 // this is where we pull the 5 day forecast
 var get5Day = function(city){
@@ -147,7 +131,7 @@ var display5Day = function(weather){
 
 
     console.log(weather)
-    
+
     var displayUV = document.createElement('span');
     displayUV.textContent =  weather.current.uvi + " UV";
     displayUV.classList.add('list-group-item');
