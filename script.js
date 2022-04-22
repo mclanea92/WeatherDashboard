@@ -19,7 +19,7 @@ var submitForm = function(event){
     if(city) {
         getCityWeather(city);
         get5Day(city);
-        cities.unshift(city)
+        cities.unshift(city);
     }
     else {
         alert('Enter City Name');
@@ -34,17 +34,18 @@ var saveSearch = function(){
 };
 
 function displayHistory() {
-  var localCitys =  localStorage.getItem('cities');
-  cities = JSON.parse(localCitys)
-  var localArray;
-  if (localCitys == null){
-      localArray = [];
+    console.log('hello world')
+  var history =  localStorage.getItem('cities');
+  history = JSON.parse(history);
+  
+  if (history === null){
+      cities = [];
   }
   else {
-    localArray = JSON.parse(localCitys);
+    cities = history;
   }
-  for (var i=0; i < localArray.length; i++) {
-        pastSearch(localArray[i])
+  for (var i=0; i < cities.length; i++) {
+        pastSearch(cities[i])
   }
 }
 
@@ -113,10 +114,14 @@ var getUV = function(city){
     fetch(UVapi)
     .then(function(response){
         response.json().then(function(data){
-            console.log(data)
+          
             displayUV(data);
         });
     })};
+
+var displayUV = function(weather){
+    console.log(weather);
+}
 
 
 // this is where we pull the 5 day forecast
@@ -127,7 +132,7 @@ var get5Day = function(city){
     fetch(apiURL)
     .then(function(response){
         response.json().then(function(data){
-            console.log(data)
+            // console.log(data)
             display5Day(data);
         });
     });
@@ -135,14 +140,14 @@ var get5Day = function(city){
 };
 // this is where we display the 5 day forecast
 var display5Day = function(weather){
-    console.log(weather)
+    // console.log(weather)
     forecastContainer.textContent = "";
     forecastTitle.textContent = "5 Day Forecast";
 
 
     
     var forecast = weather.daily;
-    console.log(weather)
+    // console.log(weather)
         for(var i= 0; i < 5; i++){  
         var dailyForecast = forecast[i];
 
@@ -160,7 +165,7 @@ var display5Day = function(weather){
         weatherIcon.classList = 'card-body text-center';
         weatherIcon.setAttribute('src', `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`)
 
-        console.log(dailyForecast.weather[0])
+        // console.log(dailyForecast.weather[0])
 
         forecastEL.appendChild(weatherIcon);
 
@@ -201,7 +206,7 @@ var pastSearchHandler = function(event){
 }
 
 
-displayHistory()
+displayHistory();
 cityFormEl.addEventListener('submit', submitForm);
 pastSearchButton.addEventListener('click', pastSearchHandler)
 
