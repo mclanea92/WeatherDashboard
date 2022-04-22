@@ -118,13 +118,6 @@ var getUV = function(city){
         });
     })};
 
-    // var displayUV = function(UV){
-    //     console.log(UV){
-    //         forecastContainer.textContent = "";
-    
-    //     }
-    // }
-
 
 // this is where we pull the 5 day forecast
 var get5Day = function(city){
