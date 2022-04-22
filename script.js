@@ -1,3 +1,4 @@
+//vars for the id's and classes in the html to locate specific areas.
 var cities = [];
 var city = document.querySelector('#city')
 var cityFormEl = document.querySelector('#city-search-form');
@@ -33,6 +34,7 @@ var saveSearch = function(){
     localStorage.setItem('cities', JSON.stringify(cities));
 };
 
+// this function diploys localstorge if the page was refreshed.
 function displayHistory() {
     console.log('hello world')
   var history =  localStorage.getItem('cities');
@@ -96,11 +98,6 @@ var displayWeather = function(weather, searchCity) {
     windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed + " mph";
     windSpeedEl.classList.add('list-group-item');
 
-    // var UVindexEl = document.createElement('span');
-    // UVindexEl = 
-
-    // lat = data.coord.lat;
-    // long = data.coord.lon;
 
     weatherContainer.appendChild(tempatureEL);
     weatherContainer.appendChild(humidityEL);
@@ -132,6 +129,8 @@ var display5Day = function(weather){
 
     console.log(weather)
 
+
+// this is where the uv is pulled from to the current forecast
     var displayUV = document.createElement('span');
     displayUV.textContent =  weather.current.uvi + " UV";
     displayUV.classList.add('list-group-item');
@@ -159,7 +158,7 @@ var display5Day = function(weather){
         weatherIcon.classList = 'card-body text-center';
         weatherIcon.setAttribute('src', `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`)
 
-        // console.log(dailyForecast.weather[0])
+    
 
         forecastEL.appendChild(weatherIcon);
 
@@ -199,7 +198,7 @@ var pastSearchHandler = function(event){
     }
 }
 
-
+// here is where the functions are called by click or display history from local storage
 displayHistory();
 cityFormEl.addEventListener('submit', submitForm);
 pastSearchButton.addEventListener('click', pastSearchHandler)
