@@ -146,7 +146,7 @@ var display5Day = function(weather){
         var dailyForecast = forecast[i];
 
         var forecastEL = document.createElement('div');
-        forecastEL.classList = 'col-6 col-sm-4 col-xs-12 card bg-primary text-light m-2'; //keep working on this bootstap
+        forecastEL.classList = 'col card bg-primary text-light m-2'; //keep working on this bootstap
         
         //creates date
         var forecastDate = document.createElement('h5');
