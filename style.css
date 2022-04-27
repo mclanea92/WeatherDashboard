@@ -59,3 +59,12 @@ span.favorable{
     background-color: red;
 }
 
+.d-flex {
+    display: flex;
+}
+
+@media screen and (max-width: 998px) {
+    .d-flex {
+        flex-direction: column;
+    }
+}
