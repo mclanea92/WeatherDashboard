@@ -39,3 +39,7 @@ span.favorable{
     background-color: green;
     color:white;
 }
+
+.currentW {
+    flex: inline-flex;
+}

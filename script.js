@@ -75,33 +75,27 @@ var getCityWeather = function(city){
 
 // this is where we display our current weather.
 var displayWeather = function(weather, searchCity) {
-    weatherContainer.textContent="";
+    // weatherContainer.textContent="";
     citySearch.textContent=searchCity;
 
-    var dateDay = document.createElement('p');
+    var dateDay = document.getElementById('current-date');
     dateDay.textContent = moment().format('MMMM Do YYYY')  // fix this not showing correct date
-    weatherContainer.appendChild(dateDay)
 
     var weatherIcon = document.createElement('img');
     weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
     citySearch.appendChild(weatherIcon);
 
-    var tempatureEL = document.createElement('span');
+    var tempatureEL = document.getElementById('current-temp');
     tempatureEL.textContent = 'Temp: ' + weather.main.temp + " Fahrenheit";
     tempatureEL.classList.add('list-group-item')
 
-    var humidityEL = document.createElement('span');
+    var humidityEL = document.getElementById('current-humid');
     humidityEL.textContent = "Humidity: " + weather.main.humidity + " %";
     humidityEL.classList.add('list-group-item');
 
-    var windSpeedEl = document.createElement('span');
+    var windSpeedEl = document.getElementById('current-wind');
     windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed + " mph";
     windSpeedEl.classList.add('list-group-item');
-
-
-    weatherContainer.appendChild(tempatureEL);
-    weatherContainer.appendChild(humidityEL);
-    weatherContainer.appendChild(windSpeedEl);
 
 }
 
@@ -131,11 +125,11 @@ var display5Day = function(weather){
 
 
 // this is where the uv is pulled from to the current forecast
-    var displayUV = document.createElement('span');
+    var displayUV = document.getElementById('current-uv');
     displayUV.textContent =  weather.current.uvi + " UV";
     displayUV.classList.add('list-group-item');
 
-    weatherContainer.appendChild(displayUV)
+    // weatherContainer.appendChild(displayUV)
 
 
     
