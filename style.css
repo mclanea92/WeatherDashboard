@@ -40,6 +40,22 @@ span.favorable{
     color:white;
 }
 
-.currentW {
-    flex: inline-flex;
+#fiveday-container {
+    flex-wrap: wrap;
 }
+
+.low-uv {
+    background-color: rgb(147, 240, 7);
+}
+
+.mid-uv{
+    background-color: yellow;
+}
+
+.high-uv {
+    background-color: orange;
+}
+.ahh-uv {
+    background-color: red;
+}
+

@@ -128,8 +128,15 @@ var display5Day = function(weather){
     var displayUV = document.getElementById('current-uv');
     displayUV.textContent =  weather.current.uvi + " UV";
     displayUV.classList.add('list-group-item');
-
-    // weatherContainer.appendChild(displayUV)
+    if (weather.current.uvi <= 2) {
+        displayUV.classList.add('low-uv');
+    } else if(weather.current.uvi <= 5) {
+        displayUV.classList.add('mid-uv');
+    } else if (weather.current.uvi <= 7) {
+        displayUV.classList.add('high-uv');
+    } else if(weather.current.uvi <= 11) {
+        displayUV.classList.add('ahh-uv');
+    }
 
 
     
@@ -139,7 +146,7 @@ var display5Day = function(weather){
         var dailyForecast = forecast[i];
 
         var forecastEL = document.createElement('div');
-        forecastEL.classList = 'card bg-primary text-light m-2';
+        forecastEL.classList = 'col-6 col-sm-4 col-xs-12 card bg-primary text-light m-2'; //keep working on this bootstap
         
         //creates date
         var forecastDate = document.createElement('h5');
