@@ -128,6 +128,7 @@ var display5Day = function(weather){
     var displayUV = document.getElementById('current-uv');
     displayUV.textContent =  weather.current.uvi + " UV";
     displayUV.classList.add('list-group-item');
+    displayUV.classList.remove('low-uv', 'mid-uv', 'high-uv', 'ahh-uv');
     if (weather.current.uvi <= 2) {
         displayUV.classList.add('low-uv');
     } else if(weather.current.uvi <= 5) {
